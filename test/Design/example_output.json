@@ -1,0 +1,135 @@
+{
+  "pkgs": [
+    {
+      "package1": {
+        "description": "Package 1 does a thing.",
+        "usage": "Use this package when you need something done.",
+        "files": [
+          {
+            "filepath": "repo/file1",
+            "description": "File 1 does a thing.",
+            "author": "John Smith",
+            "version": "1.0",
+            "date": "01/01/1970",
+            "functions": [
+              {
+                "func": "function1",
+                "description": "Function 1 does a thing",
+                "params": [
+                  {
+                    "name": "myVar",
+                    "type": "int",
+                    "description": "This describes myVar"
+                  },
+                  {
+                    "name": "mySecondVar",
+                    "type": "*types.Class",
+                    "description": "This describes mySecondVar."
+                  }
+                ],
+                "returns": [
+                  {
+                    "type": "bool",
+                    "description": "Indicates if the code is good."
+                  },
+                  {
+                    "type": "error",
+                    "description": "Contains error message from the function or nil."
+                  }
+                ],
+                "example": "example := main()\n\texample.RunMain()\n\texample.LogErrors()"
+              }
+            ],
+            "variables": [
+                {
+                  "name": "variableX",
+                  "type": "string",
+                  "description": "This variable is unexported and only used in the file. It starts with a lowercase letter."
+                }
+            ]
+          },
+          {
+            "filepath": "repo/file2",
+            "description": "Handles the functionality for 'MyClass'",
+            "author": "Jane Doe",
+            "version": "1.0",
+            "date": "01/02/1970",
+            "functions": [
+              {
+                "func": "ClassFunction",
+                "description": "Performs functionality for MyClass.",
+                "params": [
+                  {
+                    "name": "myParam",
+                    "type": "string",
+                    "description": "MyClass uses this param for functionality."
+                  }
+                ],
+                "returns": [
+                  {
+                    "type": "bool",
+                    "description": "Indicates if the code is good."
+                  },
+                  {
+                    "type": "error",
+                    "description": "Contains error message from the function or nil."
+                  }
+                ],
+                "receiver": "MyClass"
+              }
+            ]
+          },
+          {
+            "filepath": "repo/file3",
+            "description": "Handles HTTP communication",
+            "author": "Alex Johnson",
+            "version": "1.0",
+            "date": "01/03/1970",
+            "functions": [
+              {
+                "func": "HandleHTTP",
+                "description": "Handles HTTP functionality for the whole app.",
+                "responses": [
+                  {
+                    "code": "404",
+                    "description": "The something is not found."
+                  },
+                  {
+                    "code": "200",
+                    "description": "Everything is ok."
+                  }
+                ],
+                "receiver": "Handler"
+              }
+            ]
+          }
+        ],
+        "types": [
+          {
+            "type": "MyClass",
+            "description": "This is a class that has fields and functionality",
+            "fields": [
+              {
+                "name": "Field1",
+                "type": "int",
+                "description": "This field does something."
+              },
+              {
+                "name": "Field2",
+                "type": "string",
+                "description": "This field does something else."
+              }
+            ]
+          }
+        ],
+        "variables": [
+            {
+                "name": "Errors",
+                "type": "[]error",
+                "description": "This variable contains all errors generated throughout the package. It belongs to the package because it is exported and begins with a capital letter." 
+            }
+        ]
+      }
+    }
+  ]
+}
