@@ -14,7 +14,7 @@ package handler
 @pkg handler
 @desc Contains HTTP handlers for managing user-related endpoints. These handlers interact with the service layer to process requests and fetch or manipulate user data.
 @usage This package is used to define routes and handlers for user operations such as retrieving user details and listing all users.
-@dep (Testify) Used to test the handler functionality. 
+@dep (Testify) Used to test the handler functionality.
 */
 
 import (

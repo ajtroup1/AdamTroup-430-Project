@@ -1,0 +1,10 @@
+{
+  "ProjectName": "",
+  "ProjectDesc": "",
+  "ProjectPath": "./test",
+  "DocGenPath": "./docs",
+  "IncludeTests": false,
+  "IncludePrivateFuncs": false,
+  "IncludePrivateVars": false,
+  "ExcludePackages": null
+}
