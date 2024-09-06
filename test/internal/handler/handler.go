@@ -29,10 +29,9 @@ import (
 -- TYPE
 @type UserHandler
 @desc Handler for user-related HTTP requests, utilizing the user service to handle business logic.
-@fields
-	@field service (UserService): Service for managing user-related operations.
-	@field service2 (Type2): This is here for testing.
-	@field service3 (Type3): This is here for testing.
+@field service (UserService): Service for managing user-related operations.
+@field service2 (Type2): This is here for testing.
+@field service3 (Type3): This is here for testing.
 */
 
 /***
@@ -80,9 +79,9 @@ func (h *UserHandler) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 -- FUNC
 @func (h *UserHandler) GetUserByID
 @desc Handles HTTP GET requests to retrieve a user by their ID.
-@res 200 OK - JSON encoded user object.
-@res 400 Bad Request - If the provided user ID is invalid.
-@res 404 Not Found - If the user with the given ID does not exist.
+@res (200) JSON encoded user object.
+@res (400) If the provided user ID is invalid.
+@res (404) If the user with the given ID does not exist.
 */
 
 /***

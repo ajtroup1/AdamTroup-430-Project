@@ -1,0 +1,477 @@
+[
+  {
+    "Name": "main",
+    "Desc": "Contains the high-level calls to \u003cu\u003eall\u003c/u\u003e functionality in the app",
+    "Usage": "Entry point of the program. Simply 'run' the Makefile, and runtime starts here.",
+    "Files": [
+      {
+        "Path": "test\\cmd\\main.go",
+        "Name": "main.go",
+        "Desc": "Initializes the database connection, sets up the HTTP server, and routes requests to the handlers.",
+        "Author": "John Smith",
+        "Version": "1.2",
+        "Date": "01/01/2024",
+        "Funcs": [
+          {
+            "Name": "main",
+            "Desc": "The main function for the entire program. Creates a new handler using 'handler' and Gorilla Mux to listen and serve on port 8080. The example exists for testing purposes.",
+            "Params": [
+              {
+                "Name": "testParam",
+                "Type": "int",
+                "Desc": "This is only here for testing."
+              }
+            ],
+            "Returns": [
+              {
+                "Paren": "string",
+                "Desc": ": This is only here for testing."
+              }
+            ],
+            "Receiver": "",
+            "Responses": null
+          }
+        ],
+        "Vars": [
+          {
+            "Name": "r",
+            "Type": "*mux.Router",
+            "Desc": "Gorilla Mux router. Via corresponding dependency"
+          }
+        ],
+        "Types": [
+          {
+            "Name": "testType",
+            "Desc": "This is a test for unexported type names.",
+            "Fields": [
+              {
+                "Name": "field1",
+                "Type": "Type",
+                "Desc": "This is here for testing."
+              },
+              {
+                "Name": "field2",
+                "Type": "Type2",
+                "Desc": "This is here for testing."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "Types": null,
+    "Vars": [
+      {
+        "Name": "ExportedVar",
+        "Type": "VariableType",
+        "Desc": "This is a test variable."
+      }
+    ],
+    "Funcs": null,
+    "Deps": [
+      {
+        "Name": "Gorilla Mux",
+        "Desc": "Handles basic routing abilities necessary to register endpoints and serve them."
+      }
+    ]
+  },
+  {
+    "Name": "db",
+    "Desc": "Contains functions for interacting with the database, specifically for establishing and managing connections.",
+    "Usage": "This package provides the `NewConnection` function to create and return a new database connection.",
+    "Files": [
+      {
+        "Path": "test\\db\\db.go",
+        "Name": "db.go",
+        "Desc": "Provides functions for establishing a database connection using the MySQL driver.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/01/2024",
+        "Funcs": null,
+        "Vars": null,
+        "Types": null
+      }
+    ],
+    "Types": null,
+    "Vars": null,
+    "Funcs": [
+      {
+        "Name": "NewConnection",
+        "Desc": "Creates a new connection to the MySQL database using the provided Data Source Name (DSN).",
+        "Params": null,
+        "Returns": [
+          {
+            "Paren": "*sql.DB",
+            "Desc": " Database connection instance."
+          },
+          {
+            "Paren": "error",
+            "Desc": " Any error encountered while opening the database connection."
+          }
+        ],
+        "Receiver": "",
+        "Responses": null
+      }
+    ],
+    "Deps": [
+      {
+        "Name": "MySQL Driver",
+        "Desc": "Depends on the `github.com/go-sql-driver/mysql` package to interact with MySQL databases."
+      }
+    ]
+  },
+  {
+    "Name": "handler",
+    "Desc": "Contains HTTP handlers for managing user-related endpoints. These handlers interact with the service layer to process requests and fetch or manipulate user data.",
+    "Usage": "This package is used to define routes and handlers for user operations such as retrieving user details and listing all users.",
+    "Files": [
+      {
+        "Path": "test\\internal\\handler\\handler.go",
+        "Name": "handler.go",
+        "Desc": "Defines HTTP handlers for user-related endpoints, utilizing the service layer to process requests and interact with the database.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/01/2024",
+        "Funcs": [
+          {
+            "Name": "(h *UserHandler) GetUserByID",
+            "Desc": "Handles HTTP GET requests to retrieve a user by their ID.",
+            "Params": null,
+            "Returns": null,
+            "Receiver": "",
+            "Responses": [
+              {
+                "Paren": "200",
+                "Desc": " JSON encoded user object."
+              },
+              {
+                "Paren": "400",
+                "Desc": " If the provided user ID is invalid."
+              },
+              {
+                "Paren": "404",
+                "Desc": " If the user with the given ID does not exist."
+              }
+            ]
+          }
+        ],
+        "Vars": [
+          {
+            "Name": "exampleVar",
+            "Type": "int",
+            "Desc": "This is a test var for this pkg."
+          }
+        ],
+        "Types": null
+      },
+      {
+        "Path": "test\\internal\\handler\\handler_test.go",
+        "Name": "handler_test.go",
+        "Desc": "Contains tests for the user-related HTTP handlers in the handler package.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/02/2024",
+        "Funcs": null,
+        "Vars": null,
+        "Types": null
+      }
+    ],
+    "Types": [
+      {
+        "Name": "UserHandler",
+        "Desc": "Handler for user-related HTTP requests, utilizing the user service to handle business logic.",
+        "Fields": [
+          {
+            "Name": "service",
+            "Type": "UserService",
+            "Desc": "Service for managing user-related operations."
+          },
+          {
+            "Name": "service2",
+            "Type": "Type2",
+            "Desc": "This is here for testing."
+          },
+          {
+            "Name": "service3",
+            "Type": "Type3",
+            "Desc": "This is here for testing."
+          }
+        ]
+      }
+    ],
+    "Vars": [
+      {
+        "Name": "ExampleVar",
+        "Type": "int",
+        "Desc": "This is a test var for this pkg."
+      }
+    ],
+    "Funcs": [
+      {
+        "Name": "NewUserHandler",
+        "Desc": "Creates a new UserHandler instance with a given database connection.",
+        "Params": [
+          {
+            "Name": "dbConn",
+            "Type": "*sql.DB",
+            "Desc": "Database connection to initialize the UserService."
+          }
+        ],
+        "Returns": [
+          {
+            "Paren": "*UserHandler",
+            "Desc": " Initialized UserHandler instance."
+          }
+        ],
+        "Receiver": "",
+        "Responses": null
+      },
+      {
+        "Name": "GetAllUsers",
+        "Desc": "Handles HTTP GET requests to retrieve all users.",
+        "Params": null,
+        "Returns": null,
+        "Receiver": "UserHandler",
+        "Responses": null
+      }
+    ],
+    "Deps": [
+      {
+        "Name": "Testify",
+        "Desc": "Used to test the handler functionality."
+      }
+    ]
+  },
+  {
+    "Name": "repository",
+    "Desc": "Provides the repository layer for user-related database operations. This package contains methods for interacting with the `users` table in the database, including retrieving user data.",
+    "Usage": "This package is used to perform database operations related to users, such as fetching all users or retrieving a specific user by ID. It is designed to interact with the database through the `UserRepository` type.",
+    "Files": [
+      {
+        "Path": "test\\internal\\repo\\repo.go",
+        "Name": "repository.go",
+        "Desc": "Defines the repository layer for user-related database operations. Provides methods to interact with the `users` table in the database.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/01/2024",
+        "Funcs": [
+          {
+            "Name": "(r *UserRepository) GetUserByID",
+            "Desc": "Retrieves a user from the database by their ID.",
+            "Params": [
+              {
+                "Name": "id",
+                "Type": "int",
+                "Desc": "ID of the user to retrieve."
+              }
+            ],
+            "Returns": [
+              {
+                "Paren": "model.User",
+                "Desc": " User model representing the user with the given ID."
+              },
+              {
+                "Paren": "error",
+                "Desc": " Any error encountered during the query execution or if the user is not found."
+              }
+            ],
+            "Receiver": "",
+            "Responses": null
+          }
+        ],
+        "Vars": null,
+        "Types": null
+      }
+    ],
+    "Types": [
+      {
+        "Name": "UserRepository",
+        "Desc": "Repository for user-related database operations. Provides methods to retrieve user data from the `users` table.",
+        "Fields": [
+          {
+            "Name": "db",
+            "Type": "*sql.DB",
+            "Desc": "Database connection used for executing SQL queries."
+          }
+        ]
+      }
+    ],
+    "Vars": null,
+    "Funcs": [
+      {
+        "Name": "NewUserRepository",
+        "Desc": "Creates a new UserRepository instance with a given database connection.",
+        "Params": [
+          {
+            "Name": "dbConn",
+            "Type": "*sql.DB",
+            "Desc": "Database connection to initialize the UserRepository."
+          }
+        ],
+        "Returns": [
+          {
+            "Paren": "*UserRepository",
+            "Desc": " Initialized UserRepository instance."
+          }
+        ],
+        "Receiver": "",
+        "Responses": null
+      },
+      {
+        "Name": "GetAllUsers",
+        "Desc": "Retrieves all users from the database.",
+        "Params": null,
+        "Returns": [
+          {
+            "Paren": "[]model.User",
+            "Desc": " Slice of user models representing all users in the database."
+          },
+          {
+            "Paren": "error",
+            "Desc": " Any error encountered during the query execution."
+          }
+        ],
+        "Receiver": "UserRepository",
+        "Responses": null
+      }
+    ],
+    "Deps": [
+      {
+        "Name": "Model",
+        "Desc": "Depends on the `model` package for user data representation."
+      }
+    ]
+  },
+  {
+    "Name": "service",
+    "Desc": "Contains the service layer for user-related operations. This package provides business logic and interacts with the `repository` package to manage user data. It offers methods to retrieve user information and perform operations related to users.",
+    "Usage": "This package is used to handle business logic for user operations, such as fetching all users or retrieving a specific user by ID. It communicates with the repository layer to access and manipulate user data.",
+    "Files": [
+      {
+        "Path": "test\\internal\\service\\user.go",
+        "Name": "service.go",
+        "Desc": "Defines the service layer for user-related operations. Provides methods to interact with the user repository and handle business logic.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/01/2024",
+        "Funcs": [
+          {
+            "Name": "(s *UserService) GetUserByID",
+            "Desc": "Retrieves a user by their ID by calling the user repository.",
+            "Params": [
+              {
+                "Name": "id",
+                "Type": "int",
+                "Desc": "ID of the user to retrieve."
+              }
+            ],
+            "Returns": [
+              {
+                "Paren": "model.User",
+                "Desc": " User model representing the user with the given ID."
+              },
+              {
+                "Paren": "error",
+                "Desc": " Any error encountered while retrieving the user or if the user is not found."
+              }
+            ],
+            "Receiver": "",
+            "Responses": null
+          }
+        ],
+        "Vars": null,
+        "Types": null
+      }
+    ],
+    "Types": null,
+    "Vars": null,
+    "Funcs": [
+      {
+        "Name": "NewUserService",
+        "Desc": "Creates a new UserService instance with a given database connection.",
+        "Params": [
+          {
+            "Name": "dbConn",
+            "Type": "*sql.DB",
+            "Desc": "Database connection to initialize the UserRepository."
+          }
+        ],
+        "Returns": [
+          {
+            "Paren": "*UserService",
+            "Desc": " Initialized UserService instance."
+          }
+        ],
+        "Receiver": "",
+        "Responses": null
+      },
+      {
+        "Name": "GetAllUsers",
+        "Desc": "Retrieves all users by calling the user repository.",
+        "Params": null,
+        "Returns": [
+          {
+            "Paren": "[]model.User",
+            "Desc": " Slice of user models representing all users in the database."
+          },
+          {
+            "Paren": "error",
+            "Desc": " Any error encountered while retrieving users."
+          }
+        ],
+        "Receiver": "UserService",
+        "Responses": null
+      }
+    ],
+    "Deps": [
+      {
+        "Name": "Repository",
+        "Desc": "Depends on the `repository` package for accessing user-related data from the database."
+      }
+    ]
+  },
+  {
+    "Name": "types",
+    "Desc": "Contains the types necessary for the entire program",
+    "Usage": "Use for access to data structs",
+    "Files": [
+      {
+        "Path": "test\\internal\\types\\types.go",
+        "Name": "types.go",
+        "Desc": "Defines data types used throughout the application, including the user model with fields for user information. This description also contains the word package and pkg for testing reasons.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/01/2024",
+        "Funcs": null,
+        "Vars": null,
+        "Types": null
+      }
+    ],
+    "Types": [
+      {
+        "Name": "User",
+        "Desc": "Represents a user in the application. This type includes fields for storing user ID, name, and email.",
+        "Fields": [
+          {
+            "Name": "ID",
+            "Type": "int",
+            "Desc": "Unique identifier for the user."
+          },
+          {
+            "Name": "Name",
+            "Type": "string",
+            "Desc": "Name of the user."
+          },
+          {
+            "Name": "Email",
+            "Type": "string",
+            "Desc": "Email address of the user."
+          }
+        ]
+      }
+    ],
+    "Vars": null,
+    "Funcs": null,
+    "Deps": null
+  }
+]

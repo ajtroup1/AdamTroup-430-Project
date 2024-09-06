@@ -29,9 +29,8 @@ import (
 -- TYPE
 @type testType
 @desc This is a test for unexported type names.
-@fields
-	@field field1 (Type): This is here for testing.
-	@field field2 (Type2): This is here for testing.
+@field field1 (Type): This is here for testing.
+@field field2 (Type2): This is here for testing.
 */
 
 /***

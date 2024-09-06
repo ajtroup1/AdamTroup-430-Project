@@ -2,11 +2,13 @@ package parser
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+	"unicode"
 
 	"github.com/ajtroup1/GoDoc/internal/models"
 )
@@ -51,6 +53,8 @@ func (p *Parser) ParseProject() {
 	if len(comments) != 0 {
 		p.parseComments(comments)
 	}
+
+	p.writeToJson()
 }
 
 func (p *Parser) parseSourceCode(filePath string) []models.Comment {
@@ -101,30 +105,142 @@ func (p *Parser) parseComments(comments []models.Comment) {
 	// Next, initialize files (to pkgs) so unexported items can be linked to them
 	p.initializeFiles(comments)
 
-	// Test print for pkgs and files
-	for i, pkg := range p.Packages {
-		fmt.Printf("PACKAGE %d: %s\n%d files:\n", i+1, pkg.Name, len(pkg.Files))
-		for _, file := range pkg.Files {
-			fmt.Printf("  - (%s) %s\n", file.Name, file.Path)
-		}
-	}
-
 	for _, comment := range comments {
 		// Get the header from the comment block
 		headerLine := comment.Text[0]
 		keyword, err := extractKeyword(headerLine)
-		// fmt.Printf("%s\n", keyword)
 		if err != nil {
 			p.Errors = append(p.Errors, err)
 		} else {
 			// Only want to evalute if there is a valid
-			// text := strings.Join(comment.Text[1:], "\n") // All of the comment except the header line
+			text := strings.Join(comment.Text[1:], "\n") // All of the comment except the header line
 			// Retreive comment information according to block type
 			switch keyword {
-			case "FILE":
 			case "TYPE", "T":
+				var _type models.Type
+				tags, err := p.extractTagData(text)
+				if err != nil {
+					p.Errors = append(p.Errors, err)
+				} else {
+					for _, tag := range tags {
+						if tag.Name == "type" || tag.Name == "t" || tag.Name == "name" {
+							_type.Name = tag.Content
+						} else if tag.Name == "description" || tag.Name == "desc" {
+							_type.Desc = tag.Content
+						} else if tag.Name == "field" || tag.Name == "f" {
+							field, err := p.extractVarContent(tag.Content)
+							if err != nil {
+								p.Errors = append(p.Errors, err)
+							} else {
+								_type.Fields = append(_type.Fields, field)
+							}
+						}
+					}
+				}
+				if unicode.IsUpper(rune(_type.Name[0])) {
+					// Exported, belongs to pkg
+					for i := range p.Packages {
+						if p.Packages[i].Name == comment.Package {
+							p.Packages[i].Types = append(p.Packages[i].Types, _type)
+						}
+					}
+				} else {
+					// Unexported, belongs to file
+					for i, pkg := range p.Packages {
+						for j := range pkg.Files {
+							if pkg.Files[j].Path == comment.File {
+								p.Packages[i].Files[j].Types = append(p.Packages[i].Files[j].Types, _type)
+							}
+						}
+					}
+				}
 			case "FUNCTION", "FUNC":
+				var function models.Func
+				tags, err := p.extractTagData(text)
+				if err != nil {
+					p.Errors = append(p.Errors, err)
+				} else {
+					for _, tag := range tags {
+						if tag.Name == "function" || tag.Name == "func" || tag.Name == "f" || tag.Name == "name" {
+							function.Name = tag.Content
+						} else if tag.Name == "description" || tag.Name == "desc" {
+							function.Desc = tag.Content
+						} else if tag.Name == "receiver" || tag.Name == "rec" {
+							function.Receiver = tag.Content
+						} else if tag.Name == "parameter" || tag.Name == "param" || tag.Name == "p" {
+							param, err := p.extractVarContent(tag.Content)
+							if err != nil {
+								p.Errors = append(p.Errors, err)
+							} else {
+								function.Params = append(function.Params, param)
+							}
+						} else if tag.Name == "return" || tag.Name == "ret" {
+							ret, err := p.extractSpecialComment(tag.Content, comment.File)
+							if err != nil {
+								p.Errors = append(p.Errors, err)
+							} else {
+								function.Returns = append(function.Returns, ret)
+							}
+						} else if tag.Name == "response" || tag.Name == "res" {
+							res, err := p.extractSpecialComment(tag.Content, comment.File)
+							if err != nil {
+								p.Errors = append(p.Errors, err)
+							} else {
+								function.Responses = append(function.Responses, res)
+							}
+						}
+					}
+				}
+				if unicode.IsUpper(rune(function.Name[0])) {
+					// Exported, belongs to pkg
+					for i := range p.Packages {
+						if p.Packages[i].Name == comment.Package {
+							p.Packages[i].Funcs = append(p.Packages[i].Funcs, function)
+						}
+					}
+				} else {
+					// Unexported, belongs to file
+					for i, pkg := range p.Packages {
+						for j := range pkg.Files {
+							if pkg.Files[j].Path == comment.File {
+								p.Packages[i].Files[j].Funcs = append(p.Packages[i].Files[j].Funcs, function)
+							}
+						}
+					}
+				}
 			case "VARIABLE", "VAR", "V":
+				var variable models.Var
+				tags, err := p.extractTagData(text)
+				if err != nil {
+					p.Errors = append(p.Errors, err)
+				} else {
+					for _, tag := range tags {
+						if tag.Name == "variable" || tag.Name == "var" || tag.Name == "v" || tag.Name == "name" {
+							variable.Name = tag.Content
+						} else if tag.Name == "description" || tag.Name == "desc" {
+							variable.Desc = tag.Content
+						} else if tag.Name == "type" || tag.Name == "t" {
+							variable.Type = tag.Content
+						}
+					}
+				}
+				if unicode.IsUpper(rune(variable.Name[0])) {
+					// Exported, belongs to pkg
+					for i := range p.Packages {
+						if p.Packages[i].Name == comment.Package {
+							p.Packages[i].Vars = append(p.Packages[i].Vars, variable)
+						}
+					}
+				} else {
+					// Unexported, belongs to file
+					for i, pkg := range p.Packages {
+						for j := range pkg.Files {
+							if pkg.Files[j].Path == comment.File {
+								p.Packages[i].Files[j].Vars = append(p.Packages[i].Files[j].Vars, variable)
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -303,7 +419,6 @@ func (p *Parser) extractTagData(text string) ([]models.Tag, error) {
 	// fmt.Printf("%s\n", p.src)
 
 	for p.ch != 0 {
-		// fmt.Printf("%c", p.ch)
 		if p.ch == '@' {
 			p.readChar() // Skip @
 			for p.ch != ' ' {
@@ -381,6 +496,79 @@ func (p *Parser) extractDependency(content string) (models.Dependency, error) {
 	}
 
 	return dep, nil
+}
+
+func (p *Parser) extractVarContent(content string) (models.Var, error) {
+	var _var models.Var
+	var buffer strings.Builder
+	content = strings.TrimSpace(content)
+	p.src = content
+	p.resetState()
+
+	// Get the variable name first
+	for p.ch != 0 && p.ch != '(' {
+		buffer.WriteByte(p.ch)
+		p.readChar()
+	}
+	_var.Name = strings.TrimSpace(buffer.String())
+	buffer.Reset()
+	p.readChar() // Consume '('
+
+	// Get the variable type next
+	for p.ch != 0 && p.ch != ')' {
+		buffer.WriteByte(p.ch)
+		p.readChar()
+	}
+	_var.Type = strings.TrimSpace(buffer.String())
+	buffer.Reset()
+	p.readChar() // Consume ')'
+
+	if p.ch != ':' {
+		return _var, fmt.Errorf("expected format: 'myVar (string): Description of myVar'")
+	}
+	p.readChar() // Consume ':'
+	p.skipWhitespace()
+
+	// Get the variable type next
+	for p.ch != 0 {
+		buffer.WriteByte(p.ch)
+		p.readChar()
+	}
+	_var.Desc = strings.TrimSpace(buffer.String())
+	buffer.Reset()
+	p.readChar() // Consume ')'
+
+	return _var, nil
+}
+
+func (p *Parser) extractSpecialComment(content, filePath string) (models.ReturnResponse, error) {
+	var obj models.ReturnResponse
+	var buffer strings.Builder
+	content = strings.TrimSpace(content)
+	p.src = content
+	p.resetState()
+
+	if p.ch != '(' {
+		return obj, fmt.Errorf("expected '(val1) val2' in file '%s': '%s'", filePath, content)
+	}
+	p.readChar()
+
+	for p.ch != 0 && p.ch != ')' {
+		buffer.WriteByte(p.ch)
+		p.readChar()
+	}
+	obj.Paren = buffer.String()
+	buffer.Reset()
+	p.readChar()
+
+	for p.ch != 0 {
+		buffer.WriteByte(p.ch)
+		p.readChar()
+	}
+	obj.Desc = buffer.String()
+	buffer.Reset()
+
+	return obj, nil
 }
 
 func (p *Parser) resetState() {
@@ -500,4 +688,26 @@ func contains(slice []string, item string) bool {
 		}
 	}
 	return false
+}
+
+func (p *Parser) writeToJson() error {
+	// Create or open the JSON file
+	file, err := os.Create("./godoc_output.json")
+	if err != nil {
+		return fmt.Errorf("error creating JSON file: %v", err)
+	}
+	defer file.Close()
+
+	// Use JSON encoding with indentation for better readability
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+
+	// Write the Packages data to the file
+	err = encoder.Encode(p.Packages)
+	if err != nil {
+		return fmt.Errorf("error encoding JSON data: %v", err)
+	}
+
+	log.Printf("Project structure written to the relative path")
+	return nil
 }

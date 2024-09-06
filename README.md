@@ -63,9 +63,8 @@ GoDoc gives you shorter options for identifiers, since writing 'dependency' over
             @pkg myPackage
             @desc This package contains functionality.
             @usage Use this package by doing X.
-            @deps
-                @dep (someDependency) This package depends on dependency X.
-                @dep (someDependency2) This package also depends on dependency Y.
+            @dep (someDependency) This package depends on dependency X.
+            @dep (someDependency2) This package also depends on dependency Y.
         */
       ```
 - ## File
@@ -113,9 +112,8 @@ GoDoc gives you shorter options for identifiers, since writing 'dependency' over
             -- TYPE
             @type myClass
             @desc This type wraps information and has some functions.
-            @fields
-                @field myField1 (string) This field is needed for the type.
-                @field myField2 (int) This field is needed for the type.
+            @field myField1 (string): This field is needed for the type.
+            @field myField2 (int): This field is needed for the type.
         */
       ```
 - ## Function
@@ -148,15 +146,12 @@ GoDoc gives you shorter options for identifiers, since writing 'dependency' over
             @func myFunction
             @desc This function does a thing.
             @rec myClass
-            @params
-                @param myParam1 (string) This param is needed for the function.
-                @param myParam2 (int) This param is needed for the function.
-            @returns
-                @ret (error) Contains any error generated from the function.
-            @responses
-                @res (200) Signifies a successful response.
-                @res (403) Signifies an authorization error.
-                @res (400) Catch-all error message.
+            @param myParam1 (string): This param is needed for the function.
+            @param myParam2 (int): This param is needed for the function.
+            @ret (error): Contains any error generated from the function.
+            @res (200): Signifies a successful response.
+            @res (403): Signifies an authorization error.
+            @res (400): Catch-all error message.
         */
       ```
 - ## Variable
@@ -175,9 +170,8 @@ GoDoc gives you shorter options for identifiers, since writing 'dependency' over
             -- VAR
             @v myClass
             @desc This type wraps information and has some functions.
-            @fields
-                @field myField1 (string) This field is needed for the type.
-                @field myField2 (int) This field is needed for the type.
+            @field myField1 (string): This field is needed for the type.
+            @field myField2 (int): This field is needed for the type.
         */
       ```
 

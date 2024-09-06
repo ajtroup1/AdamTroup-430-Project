@@ -26,8 +26,7 @@ import (
 -- TYPE
 @type UserRepository
 @desc Repository for user-related database operations. Provides methods to retrieve user data from the `users` table.
-@fields
-	@field db (*sql.DB): Database connection used for executing SQL queries.
+@field db (*sql.DB): Database connection used for executing SQL queries.
 */
 
 type UserRepository struct {

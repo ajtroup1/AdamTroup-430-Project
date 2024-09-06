@@ -63,12 +63,13 @@ type Func struct {
 	Name     string
 	Desc     string
 	Params   []Var
-	Returns  []Return
+	Returns  []ReturnResponse
 	Receiver string
+	Responses []ReturnResponse
 }
 
-type Return struct {
-	Type string
+type ReturnResponse struct {
+	Paren string
 	Desc string
 }
 

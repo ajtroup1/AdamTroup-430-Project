@@ -20,10 +20,9 @@ package types
 -- TYPE
 @type User
 @desc Represents a user in the application. This type includes fields for storing user ID, name, and email.
-@fields
-	@field ID (int): Unique identifier for the user.
-	@field Name (string): Name of the user.
-	@field Email (string): Email address of the user.
+@field ID (int): Unique identifier for the user.
+@field Name (string): Name of the user.
+@field Email (string): Email address of the user.
 @usage This type is used to model user data for various operations including data storage and retrieval.
 */
 
