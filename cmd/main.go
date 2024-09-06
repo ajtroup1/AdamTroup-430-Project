@@ -17,7 +17,7 @@ const (
 )
 
 func main() {
-	task := flag.String("task", "", "Specify the task to run (e.g., save, gen)")
+	task := flag.String("task", "", Red+"Specify the task to run (e.g., save, gen)"+Reset)
 	flag.Parse()
 
 	// Retreive settings
@@ -33,15 +33,25 @@ func main() {
 	case "gen":
 		gen(settings)
 	default:
-		fmt.Println("Unknown task. Please specify 'save' or 'gen'.")
+		fmt.Println(Red + "Unknown task. Please specify 'save' or 'gen'." + Reset)
 	}
 	fmt.Print("" + Reset) // Prevents compiler error if all fmt are disabled
 
 }
 
 func save(settings *utils.SettingManager) {
+	// Parse the src code into the heirarchal structure
 	parser := parser.New(settings.Settings)
 	parser.ParseProject()
+
+	// If there were parsing errors, log them to the user
+	if len(parser.Errors) > 0 {
+		for _, err := range parser.Errors {
+			log.Printf(Red+"Parsing error: %v\n"+Reset, err)
+		}
+	}
+
+	// Optionally, print all
 }
 
 func gen(settings *utils.SettingManager) {

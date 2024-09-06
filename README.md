@@ -4,7 +4,8 @@ Automatic documentation generator for Go. Leave GoDoc comment blocks throughout 
 
 GoDoc reads specially formatted comments to save information about your project for generating your doc.
 
-Signify a comment is meant for GoDoc by using three asterisks (`/***`) at the start of the comment block instead of a single asterisk (`/*`).
+
+**Signify a comment is meant for GoDoc by using three asterisks (`/***`) at the start of the comment block instead of a single asterisk (`/*`).**
 
 - **GoDoc comment:**
   ```go
@@ -22,7 +23,8 @@ Signify a comment is meant for GoDoc by using three asterisks (`/***`) at the st
         It has multiple lines
     */
   ```
-  Reserved comment keywords, or tags, are prefixed with `@`, similar to Doxygen.
+
+Reserved comment keywords, or tags, are prefixed with `@`, similar to Doxygen.
 
 At the top of your comment block, start with `-- TYPE`, where `TYPE` is the type of comments you're making.
 
@@ -35,7 +37,7 @@ GoDoc gives you shorter options for identifiers, since writing 'dependency' over
 - Even `@package` & `@name` are evaluated the same within package comment blocks
 - Look at the information on types of comments for more information on these shorthand options
 
-Types of GoDoc comment blocks:
+## Types of GoDoc comment blocks:
 
 \*Some identifiers have options for shorthand tag names. If you want verbose comments in your source, use the full tag names, but it will not affect the generation of documentation if you use shorthands.
 
@@ -178,3 +180,14 @@ Types of GoDoc comment blocks:
                 @field myField2 (int) This field is needed for the type.
         */
       ```
+
+## How does GoDoc work?
+GoDoc parses your formatted source comments into a data structure of 'nodes':
+
+<div style="text-align: center;">
+    <img src="./test/Design/DummyDataStructure.png" style="width: 75vw;"/>
+</div>
+
+*Note: This tree isn't fully comprehensive (for easy readability) and each 'node' in the tree contains metadata.
+
+Then, this data structure is easily traversed to generate markdown. This works exactly like a compiler, but with only comments.

@@ -13,6 +13,12 @@ type Settings struct {
 	ExcludePackages     []string
 }
 
+type Comment struct {
+	File    string   `json:"file"`
+	Package string   `json:"package"`
+	Text    []string `json:"text"`
+}
+
 type Package struct {
 	Name  string
 	Desc  string
@@ -64,4 +70,9 @@ type Func struct {
 type Return struct {
 	Type string
 	Desc string
+}
+
+type Tag struct {
+	Name    string
+	Content string
 }

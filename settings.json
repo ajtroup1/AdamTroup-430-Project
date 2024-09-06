@@ -3,7 +3,7 @@
   "ProjectDesc": "",
   "ProjectPath": "./test",
   "DocGenPath": "./docs",
-  "IncludeTests": false,
+  "IncludeTests": true,
   "IncludePrivateFuncs": false,
   "IncludePrivateVars": false,
   "ExcludePackages": null

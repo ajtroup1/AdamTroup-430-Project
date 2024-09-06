@@ -10,6 +10,13 @@
 package types
 
 /***
+-- PKG
+@pkg types
+@desc Contains the types necessary for the entire program
+@usage Use for access to data structs
+*/
+
+/***
 -- TYPE
 @type User
 @desc Represents a user in the application. This type includes fields for storing user ID, name, and email.
