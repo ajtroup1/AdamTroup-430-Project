@@ -56,7 +56,7 @@ func (s *UserService) GetAllUsers() ([]model.User, error) {
 
 /***
 -- FUNC
-@func (s *UserService) GetUserByID
+@func GetUserByID
 @desc Retrieves a user by their ID by calling the user repository.
 @param id (int): ID of the user to retrieve.
 @return (model.User) User model representing the user with the given ID.

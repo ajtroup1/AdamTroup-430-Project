@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/ajtroup1/GoDoc/internal/generator"
 	"github.com/ajtroup1/GoDoc/internal/parser"
 	"github.com/ajtroup1/GoDoc/utils"
 )
@@ -50,10 +51,18 @@ func save(settings *utils.SettingManager) {
 			log.Printf(Red+"Parsing error: %v\n"+Reset, err)
 		}
 	}
-
-	// Optionally, print all
 }
 
 func gen(settings *utils.SettingManager) {
+	// Generate the program's documentation from the heirarchal structure
+	generator := generator.New(settings.Settings)
+	generator.GenerateDocs()
 
+	// If there were generation errors, log them to the user
+	// In the end application, there should never be genereation errors
+	if len(generator.Errors) > 0 {
+		for _, err := range generator.Errors {
+			log.Printf(Red+"Generation error: %v\n"+Reset, err)
+		}
+	}
 }

@@ -108,7 +108,7 @@ func (p *Parser) parseComments(comments []models.Comment) {
 	for _, comment := range comments {
 		// Get the header from the comment block
 		headerLine := comment.Text[0]
-		keyword, err := extractKeyword(headerLine)
+		keyword, err := extractKeyword(headerLine, comment.File)
 		if err != nil {
 			p.Errors = append(p.Errors, err)
 		} else {
@@ -258,7 +258,7 @@ func (p *Parser) initializePackages(comments []models.Comment) {
 	for _, comment := range comments {
 		// Get the header from the comment block
 		headerLine := comment.Text[0]
-		keyword, err := extractKeyword(headerLine)
+		keyword, err := extractKeyword(headerLine, comment.File)
 		// fmt.Printf("%s\n", keyword)
 		if err != nil {
 			p.Errors = append(p.Errors, err)
@@ -340,7 +340,7 @@ func (p *Parser) initializeFiles(comments []models.Comment) {
 	for _, comment := range comments {
 		// Get the header from the comment block
 		headerLine := comment.Text[0]
-		keyword, err := extractKeyword(headerLine)
+		keyword, err := extractKeyword(headerLine, comment.File)
 		// fmt.Printf("%s\n", keyword)
 		if err != nil {
 			p.Errors = append(p.Errors, err)
@@ -391,7 +391,7 @@ func (p *Parser) initializeFiles(comments []models.Comment) {
 	}
 }
 
-func extractKeyword(line string) (string, error) {
+func extractKeyword(line, filePath string) (string, error) {
 	// Trim spaces and check if the line starts with `-- `
 	line = strings.TrimSpace(line)
 	if strings.HasPrefix(line, "-- ") {
@@ -404,7 +404,7 @@ func extractKeyword(line string) (string, error) {
 		// Further trim spaces around the keyword
 		return keyword, nil
 	} else {
-		return "", fmt.Errorf("expected '-- ' before comment block type")
+		return "", fmt.Errorf("expected '-- ' before comment block type in '%s': '%s'", filePath, line)
 	}
 }
 

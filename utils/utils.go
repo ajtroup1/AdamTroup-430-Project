@@ -35,10 +35,11 @@ func retrieveOrCreateSettings() (models.Settings, error) {
 	if _, err := os.Stat(settingsFile); errors.Is(err, os.ErrNotExist) {
 		// File doesn't exist, create default settings
 		defaultSettings := models.Settings{
-			ProjectName: "",
-			ProjectDesc: "",
-			ProjectPath: "./",
-			DocGenPath:  "./",
+			ProjectName:  "",
+			ProjectDesc:  "",
+			ProjectPath:  "./",
+			DocGenPath:   "./",
+			DocGenFormat: "markdown",
 		}
 
 		// Save default settings to a new JSON file

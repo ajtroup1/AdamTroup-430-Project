@@ -77,8 +77,9 @@ func (h *UserHandler) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 
 /***
 -- FUNC
-@func (h *UserHandler) GetUserByID
+@func GetUserByID
 @desc Handles HTTP GET requests to retrieve a user by their ID.
+@rec UserHandler
 @res (200) JSON encoded user object.
 @res (400) If the provided user ID is invalid.
 @res (404) If the user with the given ID does not exist.

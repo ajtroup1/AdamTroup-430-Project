@@ -132,29 +132,7 @@
         "Author": "John Smith",
         "Version": "1.0",
         "Date": "01/01/2024",
-        "Funcs": [
-          {
-            "Name": "(h *UserHandler) GetUserByID",
-            "Desc": "Handles HTTP GET requests to retrieve a user by their ID.",
-            "Params": null,
-            "Returns": null,
-            "Receiver": "",
-            "Responses": [
-              {
-                "Paren": "200",
-                "Desc": " JSON encoded user object."
-              },
-              {
-                "Paren": "400",
-                "Desc": " If the provided user ID is invalid."
-              },
-              {
-                "Paren": "404",
-                "Desc": " If the user with the given ID does not exist."
-              }
-            ]
-          }
-        ],
+        "Funcs": null,
         "Vars": [
           {
             "Name": "exampleVar",
@@ -162,17 +140,6 @@
             "Desc": "This is a test var for this pkg."
           }
         ],
-        "Types": null
-      },
-      {
-        "Path": "test\\internal\\handler\\handler_test.go",
-        "Name": "handler_test.go",
-        "Desc": "Contains tests for the user-related HTTP handlers in the handler package.",
-        "Author": "John Smith",
-        "Version": "1.0",
-        "Date": "01/02/2024",
-        "Funcs": null,
-        "Vars": null,
         "Types": null
       }
     ],
@@ -233,6 +200,27 @@
         "Returns": null,
         "Receiver": "UserHandler",
         "Responses": null
+      },
+      {
+        "Name": "GetUserByID",
+        "Desc": "Handles HTTP GET requests to retrieve a user by their ID.",
+        "Params": null,
+        "Returns": null,
+        "Receiver": "UserHandler",
+        "Responses": [
+          {
+            "Paren": "200",
+            "Desc": " JSON encoded user object."
+          },
+          {
+            "Paren": "400",
+            "Desc": " If the provided user ID is invalid."
+          },
+          {
+            "Paren": "404",
+            "Desc": " If the user with the given ID does not exist."
+          }
+        ]
       }
     ],
     "Deps": [
@@ -254,31 +242,7 @@
         "Author": "John Smith",
         "Version": "1.0",
         "Date": "01/01/2024",
-        "Funcs": [
-          {
-            "Name": "(r *UserRepository) GetUserByID",
-            "Desc": "Retrieves a user from the database by their ID.",
-            "Params": [
-              {
-                "Name": "id",
-                "Type": "int",
-                "Desc": "ID of the user to retrieve."
-              }
-            ],
-            "Returns": [
-              {
-                "Paren": "model.User",
-                "Desc": " User model representing the user with the given ID."
-              },
-              {
-                "Paren": "error",
-                "Desc": " Any error encountered during the query execution or if the user is not found."
-              }
-            ],
-            "Receiver": "",
-            "Responses": null
-          }
-        ],
+        "Funcs": null,
         "Vars": null,
         "Types": null
       }
@@ -333,6 +297,29 @@
         ],
         "Receiver": "UserRepository",
         "Responses": null
+      },
+      {
+        "Name": "GetUserByID",
+        "Desc": "Retrieves a user from the database by their ID.",
+        "Params": [
+          {
+            "Name": "id",
+            "Type": "int",
+            "Desc": "ID of the user to retrieve."
+          }
+        ],
+        "Returns": [
+          {
+            "Paren": "model.User",
+            "Desc": " User model representing the user with the given ID."
+          },
+          {
+            "Paren": "error",
+            "Desc": " Any error encountered during the query execution or if the user is not found."
+          }
+        ],
+        "Receiver": "",
+        "Responses": null
       }
     ],
     "Deps": [
@@ -354,31 +341,7 @@
         "Author": "John Smith",
         "Version": "1.0",
         "Date": "01/01/2024",
-        "Funcs": [
-          {
-            "Name": "(s *UserService) GetUserByID",
-            "Desc": "Retrieves a user by their ID by calling the user repository.",
-            "Params": [
-              {
-                "Name": "id",
-                "Type": "int",
-                "Desc": "ID of the user to retrieve."
-              }
-            ],
-            "Returns": [
-              {
-                "Paren": "model.User",
-                "Desc": " User model representing the user with the given ID."
-              },
-              {
-                "Paren": "error",
-                "Desc": " Any error encountered while retrieving the user or if the user is not found."
-              }
-            ],
-            "Receiver": "",
-            "Responses": null
-          }
-        ],
+        "Funcs": null,
         "Vars": null,
         "Types": null
       }
@@ -420,6 +383,29 @@
           }
         ],
         "Receiver": "UserService",
+        "Responses": null
+      },
+      {
+        "Name": "GetUserByID",
+        "Desc": "Retrieves a user by their ID by calling the user repository.",
+        "Params": [
+          {
+            "Name": "id",
+            "Type": "int",
+            "Desc": "ID of the user to retrieve."
+          }
+        ],
+        "Returns": [
+          {
+            "Paren": "model.User",
+            "Desc": " User model representing the user with the given ID."
+          },
+          {
+            "Paren": "error",
+            "Desc": " Any error encountered while retrieving the user or if the user is not found."
+          }
+        ],
+        "Receiver": "",
         "Responses": null
       }
     ],

@@ -7,6 +7,7 @@ type Settings struct {
 	ProjectDesc         string
 	ProjectPath         string
 	DocGenPath          string
+	DocGenFormat        string
 	IncludeTests        bool
 	IncludePrivateFuncs bool
 	IncludePrivateVars  bool
@@ -60,17 +61,17 @@ type Var struct {
 }
 
 type Func struct {
-	Name     string
-	Desc     string
-	Params   []Var
-	Returns  []ReturnResponse
-	Receiver string
+	Name      string
+	Desc      string
+	Params    []Var
+	Returns   []ReturnResponse
+	Receiver  string
 	Responses []ReturnResponse
 }
 
 type ReturnResponse struct {
 	Paren string
-	Desc string
+	Desc  string
 }
 
 type Tag struct {
