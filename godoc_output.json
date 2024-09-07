@@ -141,6 +141,17 @@
           }
         ],
         "Types": null
+      },
+      {
+        "Path": "test\\internal\\handler\\handler_test.go",
+        "Name": "handler_test.go",
+        "Desc": "Contains tests for the user-related HTTP handlers in the handler package.",
+        "Author": "John Smith",
+        "Version": "1.0",
+        "Date": "01/02/2024",
+        "Funcs": null,
+        "Vars": null,
+        "Types": null
       }
     ],
     "Types": [

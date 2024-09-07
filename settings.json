@@ -4,7 +4,7 @@
   "ProjectPath": "./test",
   "DocGenPath": "./docs",
   "DocGenFormat": "markdown",
-  "IncludeTests": false,
+  "IncludeTests": true,
   "IncludePrivateFuncs": false,
   "IncludePrivateVars": false,
   "ExcludePackages": null

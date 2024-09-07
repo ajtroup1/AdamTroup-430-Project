@@ -112,10 +112,12 @@ func (g *Generator) generateBodyMD(writer *bufio.Writer) {
 				return
 			}
 		}
+		if len(pkg.Files) > 0 {
+			g.writeFile(pkg.Files, writer)
+		} else {
+			g.Errors = append(g.Errors, fmt.Errorf("no files in package '%s'", pkg.Name))
+		}
 
-		// for _, file := range pkg.Files {
-
-		// }
 		if len(pkg.Types) > 0 {
 			_, err = writer.WriteString("      - #### Types:\n")
 			if err != nil {
@@ -262,5 +264,164 @@ func (g *Generator) generateBodyMD(writer *bufio.Writer) {
 	err = writer.Flush()
 	if err != nil {
 		g.Errors = append(g.Errors, fmt.Errorf("error flushing writer: %v", err))
+	}
+}
+
+func (g *Generator) writeFile(files []models.File, writer *bufio.Writer) {
+	_, err := writer.WriteString("      - #### Files:\n")
+	if err != nil {
+		g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+		return
+	}
+	for _, file := range files {
+		_, err = writer.WriteString(fmt.Sprintf("        - `%s`\n", file.Name))
+		if err != nil {
+			g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+			return
+		}
+		if file.Desc != "" {
+			_, err = writer.WriteString(fmt.Sprintf("          - %s\n", file.Desc))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+		}
+		if file.Author != "" {
+			_, err = writer.WriteString(fmt.Sprintf("          - Authored by: **%s**\n", file.Author))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+		}
+		if file.Version != "" {
+			_, err = writer.WriteString(fmt.Sprintf("          - Version: **%s**\n", file.Version))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+		}
+		if file.Date != "" {
+			_, err = writer.WriteString(fmt.Sprintf("          - Updated on: **%s**\n", file.Date))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+		}
+
+		if len(file.Types) > 0 {
+			_, err := writer.WriteString(fmt.Sprintf("          - **Types for file `%s`**:\n", file.Name))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+			for _, _type := range file.Types {
+				_, err = writer.WriteString(fmt.Sprintf("            - %s\n", _type.Name))
+				if err != nil {
+					g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+					return
+				}
+				if _type.Desc != "" {
+					_, err = writer.WriteString(fmt.Sprintf("            - Updated on: **%s**\n", file.Date))
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+				}
+				if len(_type.Fields) > 0 {
+					_, err = writer.WriteString("            - Fields:\n")
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+					for _, field := range _type.Fields {
+						_, err = writer.WriteString(fmt.Sprintf("                - `%s:`\n", field.Name))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+						_, err = writer.WriteString(fmt.Sprintf("                  - Data type: `%s`\n", field.Type))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+						_, err = writer.WriteString(fmt.Sprintf("                  - %s\n", field.Desc))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+					}
+				}
+			}
+		}
+
+		if len(file.Funcs) > 0 {
+			_, err := writer.WriteString(fmt.Sprintf("          - **Functions for file `%s`**:\n", file.Name))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+			for _, function := range file.Funcs {
+				_, err = writer.WriteString(fmt.Sprintf("            - %s\n", function.Name))
+				if err != nil {
+					g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+					return
+				}
+				if function.Desc != "" {
+					_, err = writer.WriteString(fmt.Sprintf("            - Updated on: **%s**\n", file.Date))
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+				}
+				if len(function.Params) > 0 {
+					_, err = writer.WriteString("            - Parameters:\n")
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+					for _, param := range function.Params {
+						_, err = writer.WriteString(fmt.Sprintf("                - `%s:`\n", param.Name))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+						_, err = writer.WriteString(fmt.Sprintf("                  - Data type: `%s`\n", param.Type))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+						_, err = writer.WriteString(fmt.Sprintf("                  - %s\n", param.Desc))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+					}
+				}
+				if len(function.Returns) > 0 {
+					_, err = writer.WriteString("            - Returns:\n")
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+					for _, param := range function.Params {
+						_, err = writer.WriteString(fmt.Sprintf("                - `%s:`\n", param.Name))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+						_, err = writer.WriteString(fmt.Sprintf("                  - Data type: `%s`\n", param.Type))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+						_, err = writer.WriteString(fmt.Sprintf("                  - %s\n", param.Desc))
+						if err != nil {
+							g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+							return
+						}
+					}
+				}
+			}
+		}
 	}
 }
