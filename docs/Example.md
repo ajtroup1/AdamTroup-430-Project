@@ -31,6 +31,10 @@ This is an example documenation for GoDoc.
                 - `testParam:`
                   - Data type: `int`
                   - This is only here for testing.
+          - **Variables for file `main.go`**:
+            - r
+            - Data type: `*mux.Router`
+            - Gorilla Mux router. Via corresponding dependency
       - #### Variables for `main`:
         - **ExportedVar**
           - Data type: `VariableType`
@@ -63,6 +67,10 @@ This is an example documenation for GoDoc.
           - Authored by: **John Smith**
           - Version: **1.0**
           - Updated on: **01/01/2024**
+          - **Variables for file `handler.go`**:
+            - exampleVar
+            - Data type: `int`
+            - This is a test var for this pkg.
         - `handler_test.go`
           - Contains tests for the user-related HTTP handlers in the handler package.
           - Authored by: **John Smith**

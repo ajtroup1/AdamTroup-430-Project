@@ -423,5 +423,33 @@ func (g *Generator) writeFile(files []models.File, writer *bufio.Writer) {
 				}
 			}
 		}
+		if len(file.Vars) > 0 {
+			_, err := writer.WriteString(fmt.Sprintf("          - **Variables for file `%s`**:\n", file.Name))
+			if err != nil {
+				g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+				return
+			}
+			for _, variable := range file.Vars {
+				_, err = writer.WriteString(fmt.Sprintf("            - %s\n", variable.Name))
+				if err != nil {
+					g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+					return
+				}
+				if variable.Type != "" {
+					_, err = writer.WriteString(fmt.Sprintf("            - Data type: `%s`\n", variable.Type))
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+				}
+				if variable.Desc != "" {
+					_, err = writer.WriteString(fmt.Sprintf("            - %s\n", variable.Desc))
+					if err != nil {
+						g.Errors = append(g.Errors, fmt.Errorf("error writing package name to markdown: %v", err))
+						return
+					}
+				}
+			}
+		}
 	}
 }
