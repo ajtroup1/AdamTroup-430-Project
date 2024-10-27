@@ -3,98 +3,219 @@
   - ### Package: `main`
     Contains the high-level calls to <u>all</u> functionality in the app
 
+      - #### Files:
+        - `main.go`
+          - Initializes the database connection, sets up the HTTP server, and routes requests to the handlers.
+          - Authored by: **John Smith**
+          - Version: **1.2**
+          - Updated on: **01/01/2024**
+          - **Types for file `main.go`**:
+            - testType
+            - Updated on: **01/01/2024**
+            - Fields:
+                - `field1:`
+                  - Data type: `Type`
+                  - This is here for testing.
+                - `field2:`
+                  - Data type: `Type2`
+                  - This is here for testing.
+          - **Functions for file `main.go`**:
+            - main
+            - Updated on: **01/01/2024**
+            - Parameters:
+                - `testParam:`
+                  - Data type: `int`
+                  - This is only here for testing.
+            - Returns:
+                - `testParam:`
+                  - Data type: `int`
+                  - This is only here for testing.
+          - **Variables for file `main.go`**:
+            - r
+            - Data type: `*mux.Router`
+            - Gorilla Mux router. Via corresponding dependency
+      - #### Variables for `main`:
+        - **ExportedVar**
+          - Data type: `VariableType`
+          - This is a test variable.
 ---
   - ### Package: `db`
     Contains functions for interacting with the database, specifically for establishing and managing connections.
 
-      #### Functions for `db`:
-      - **NewConnection**
-        - Creates a new connection to the MySQL database using the provided Data Source Name (DSN).
-        - 
-        - Parameters:
+      - #### Files:
+        - `db.go`
+          - Provides functions for establishing a database connection using the MySQL driver.
+          - Authored by: **John Smith**
+          - Version: **1.0**
+          - Updated on: **01/01/2024**
+      - #### Functions for `db`:
+        - **NewConnection**
+          - Creates a new connection to the MySQL database using the provided Data Source Name (DSN).
+          - Return values:
+              - `*sql.DB`
+                -  Database connection instance.
+              - `error`
+                -  Any error encountered while opening the database connection.
 ---
   - ### Package: `handler`
     Contains HTTP handlers for managing user-related endpoints. These handlers interact with the service layer to process requests and fetch or manipulate user data.
 
-      #### Types:
-      - **UserHandler**
-        - Handler for user-related HTTP requests, utilizing the user service to handle business logic.
-        - Fields:
-          - `service`
-            - Data type: `UserService`
-            - Service for managing user-related operations.
-          - `service2`
-            - Data type: `Type2`
-            - This is here for testing.
-          - `service3`
-            - Data type: `Type3`
-            - This is here for testing.
-      #### Functions for `handler`:
-      - **NewUserHandler**
-        - Creates a new UserHandler instance with a given database connection.
-        - 
-        - Parameters:
-          - `dbConn`
-            - Data type: `*sql.DB`
-            - Database connection to initialize the UserService.
-      - **GetAllUsers**
-        - Handles HTTP GET requests to retrieve all users.
-        - UserHandler
-        - Parameters:
+      - #### Files:
+        - `handler.go`
+          - Defines HTTP handlers for user-related endpoints, utilizing the service layer to process requests and interact with the database.
+          - Authored by: **John Smith**
+          - Version: **1.0**
+          - Updated on: **01/01/2024**
+          - **Variables for file `handler.go`**:
+            - exampleVar
+            - Data type: `int`
+            - This is a test var for this pkg.
+      - #### Types:
+        - **UserHandler**
+          - Handler for user-related HTTP requests, utilizing the user service to handle business logic.
+          - Fields:
+            - `service`
+              - Data type: `UserService`
+              - Service for managing user-related operations.
+            - `service2`
+              - Data type: `Type2`
+              - This is here for testing.
+            - `service3`
+              - Data type: `Type3`
+              - This is here for testing.
+      - #### Functions for `handler`:
+        - **NewUserHandler**
+          - Creates a new UserHandler instance with a given database connection.
+          - Parameters:
+              - `dbConn`
+                - Data type: `*sql.DB`
+                - Database connection to initialize the UserService.
+          - Return values:
+              - `*UserHandler`
+                -  Initialized UserHandler instance.
+        - **GetAllUsers**
+          - Handles HTTP GET requests to retrieve all users.
+          - UserHandler
+        - **GetUserByID**
+          - Handles HTTP GET requests to retrieve a user by their ID.
+          - UserHandler
+          - HTTP responses:
+              - `200`
+                -  JSON encoded user object.
+              - `400`
+                -  If the provided user ID is invalid.
+              - `404`
+                -  If the user with the given ID does not exist.
+      - #### Variables for `handler`:
+        - **ExampleVar**
+          - Data type: `int`
+          - This is a test var for this pkg.
 ---
   - ### Package: `repository`
     Provides the repository layer for user-related database operations. This package contains methods for interacting with the `users` table in the database, including retrieving user data.
 
-      #### Types:
-      - **UserRepository**
-        - Repository for user-related database operations. Provides methods to retrieve user data from the `users` table.
-        - Fields:
-          - `db`
-            - Data type: `*sql.DB`
-            - Database connection used for executing SQL queries.
-      #### Functions for `repository`:
-      - **NewUserRepository**
-        - Creates a new UserRepository instance with a given database connection.
-        - 
-        - Parameters:
-          - `dbConn`
-            - Data type: `*sql.DB`
-            - Database connection to initialize the UserRepository.
-      - **GetAllUsers**
-        - Retrieves all users from the database.
-        - UserRepository
-        - Parameters:
+      - #### Files:
+        - `repository.go`
+          - Defines the repository layer for user-related database operations. Provides methods to interact with the `users` table in the database.
+          - Authored by: **John Smith**
+          - Version: **1.0**
+          - Updated on: **01/01/2024**
+      - #### Types:
+        - **UserRepository**
+          - Repository for user-related database operations. Provides methods to retrieve user data from the `users` table.
+          - Fields:
+            - `db`
+              - Data type: `*sql.DB`
+              - Database connection used for executing SQL queries.
+      - #### Functions for `repository`:
+        - **NewUserRepository**
+          - Creates a new UserRepository instance with a given database connection.
+          - Parameters:
+              - `dbConn`
+                - Data type: `*sql.DB`
+                - Database connection to initialize the UserRepository.
+          - Return values:
+              - `*UserRepository`
+                -  Initialized UserRepository instance.
+        - **GetAllUsers**
+          - Retrieves all users from the database.
+          - UserRepository
+          - Return values:
+              - `[]model.User`
+                -  Slice of user models representing all users in the database.
+              - `error`
+                -  Any error encountered during the query execution.
+        - **GetUserByID**
+          - Retrieves a user from the database by their ID.
+          - Parameters:
+              - `id`
+                - Data type: `int`
+                - ID of the user to retrieve.
+          - Return values:
+              - `model.User`
+                -  User model representing the user with the given ID.
+              - `error`
+                -  Any error encountered during the query execution or if the user is not found.
 ---
   - ### Package: `service`
     Contains the service layer for user-related operations. This package provides business logic and interacts with the `repository` package to manage user data. It offers methods to retrieve user information and perform operations related to users.
 
-      #### Functions for `service`:
-      - **NewUserService**
-        - Creates a new UserService instance with a given database connection.
-        - 
-        - Parameters:
-          - `dbConn`
-            - Data type: `*sql.DB`
-            - Database connection to initialize the UserRepository.
-      - **GetAllUsers**
-        - Retrieves all users by calling the user repository.
-        - UserService
-        - Parameters:
+      - #### Files:
+        - `service.go`
+          - Defines the service layer for user-related operations. Provides methods to interact with the user repository and handle business logic.
+          - Authored by: **John Smith**
+          - Version: **1.0**
+          - Updated on: **01/01/2024**
+      - #### Functions for `service`:
+        - **NewUserService**
+          - Creates a new UserService instance with a given database connection.
+          - Parameters:
+              - `dbConn`
+                - Data type: `*sql.DB`
+                - Database connection to initialize the UserRepository.
+          - Return values:
+              - `*UserService`
+                -  Initialized UserService instance.
+        - **GetAllUsers**
+          - Retrieves all users by calling the user repository.
+          - UserService
+          - Return values:
+              - `[]model.User`
+                -  Slice of user models representing all users in the database.
+              - `error`
+                -  Any error encountered while retrieving users.
+        - **GetUserByID**
+          - Retrieves a user by their ID by calling the user repository.
+          - Parameters:
+              - `id`
+                - Data type: `int`
+                - ID of the user to retrieve.
+          - Return values:
+              - `model.User`
+                -  User model representing the user with the given ID.
+              - `error`
+                -  Any error encountered while retrieving the user or if the user is not found.
 ---
   - ### Package: `types`
     Contains the types necessary for the entire program
 
-      #### Types:
-      - **User**
-        - Represents a user in the application. This type includes fields for storing user ID, name, and email.
-        - Fields:
-          - `ID`
-            - Data type: `int`
-            - Unique identifier for the user.
-          - `Name`
-            - Data type: `string`
-            - Name of the user.
-          - `Email`
-            - Data type: `string`
-            - Email address of the user.
+      - #### Files:
+        - `types.go`
+          - Defines data types used throughout the application, including the user model with fields for user information. This description also contains the word package and pkg for testing reasons.
+          - Authored by: **John Smith**
+          - Version: **1.0**
+          - Updated on: **01/01/2024**
+      - #### Types:
+        - **User**
+          - Represents a user in the application. This type includes fields for storing user ID, name, and email.
+          - Fields:
+            - `ID`
+              - Data type: `int`
+              - Unique identifier for the user.
+            - `Name`
+              - Data type: `string`
+              - Name of the user.
+            - `Email`
+              - Data type: `string`
+              - Email address of the user.
 ---

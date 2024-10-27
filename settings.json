@@ -1,10 +1,10 @@
 {
-  "ProjectName": "Example",
-  "ProjectDesc": "This is an example documenation for GoDoc.",
+  "ProjectName": "My Project",
+  "ProjectDesc": "This is an example generated markdown documentation",
   "ProjectPath": "./test",
   "DocGenPath": "./docs",
   "DocGenFormat": "markdown",
-  "IncludeTests": true,
+  "IncludeTests": false,
   "IncludePrivateFuncs": false,
   "IncludePrivateVars": false,
   "ExcludePackages": null

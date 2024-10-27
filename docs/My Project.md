@@ -1,5 +1,5 @@
-# Example
-This is an example documenation for GoDoc.
+# My Project
+This is an example generated markdown documentation
 ## Packages:
   - ### Package: `main`
     Contains the high-level calls to <u>all</u> functionality in the app
@@ -71,11 +71,6 @@ This is an example documenation for GoDoc.
             - exampleVar
             - Data type: `int`
             - This is a test var for this pkg.
-        - `handler_test.go`
-          - Contains tests for the user-related HTTP handlers in the handler package.
-          - Authored by: **John Smith**
-          - Version: **1.0**
-          - Updated on: **01/02/2024**
       - #### Types:
         - **UserHandler**
           - Handler for user-related HTTP requests, utilizing the user service to handle business logic.
