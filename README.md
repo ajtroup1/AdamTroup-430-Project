@@ -60,6 +60,9 @@ DocMate uses specially-formatted comment blocks to generate documentation for Go
         - Maybe an email, social media handles, decorators or command symbols, whatever...
 - **Please** inspect `internal/parser/parser.go` to find out more about how the syntax is parsed and the syntactical rules for DocMate.
 
+### DocMate project structure
+<img src="./docs/DocMate data diagram (AST).png"/>
+
 ## Types of DocMate comments
 - Package
     - *Describes the high-level package information*
@@ -132,7 +135,8 @@ DocMate uses specially-formatted comment blocks to generate documentation for Go
 4. Once the `godoc_output.json` is generated, run `make gen` to actually generate a documentation file in the path specified in settings
 
 ## Settings
-A list of all settings includes:
+A list of settings includes:
+(*Settings are a work in progress*)
 - Your project's name
     - This will dictate the title that appears in the generated documentation
 - A path to the repository that contains all DocMate comments (your entire project to be evaluated and generated into documentation)
@@ -151,8 +155,6 @@ A list of all settings includes:
         - Example in the documentation:
             - With capitalization: "### Package-Level Functions for `Package1`"
             - Without capitalization: "### Package-Level Functions for `package1`"
-
-<!-- <img src="./design/DocMate data diagram (AST).png"/> -->
 
 ### Development notes
 #### Todo:
